@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4ee">
+  <meta name="description" content="Turn long opportunity notices into clear, evidence-backed action lists.">
+  <title>ClarityKit — Find the fine print</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ClarityKit home"><span class="brand-mark"><span></span><span></span><span></span></span><span>clarity<span class="brand-light">kit</span></span></a>
+    <div class="topbar-right"><span class="status-dot"></span><span>NOTICE INTELLIGENCE</span><span class="version">BETA / 01</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> LESS GUESSING. MORE DOING.</div>
+        <h1>Find the fine print.<br><em>Keep your shot.</em></h1>
+        <p class="hero-sub">Long rules hide small details with big consequences. Turn opportunity notices into a clear, evidence-backed action list — before you hit submit.</p>
+        <div class="hero-proof"><span class="proof-icon">↳</span><span>Every finding comes with the words that triggered it.</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-paper"><div class="paper-top"><span>NOTICE / 001</span><span>● ● ●</span></div><div class="paper-title">Terms &amp;<br>conditions</div><div class="paper-line long"></div><div class="paper-line"></div><div class="paper-highlight"><span class="highlight-dot">!</span><span>SUBMIT BY<br><b>08:30 AM</b></span></div><div class="paper-line long"></div><div class="paper-line short"></div><div class="paper-stamp">READ<br>BETWEEN<br>LINES</div></div>
+        <div class="floating-note note-top"><span class="note-star">✳</span> MISSED THAT?</div>
+        <div class="floating-note note-bottom"><span class="tiny-check">✓</span> Now it's on your list.</div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Notice analyzer">
+      <div class="section-heading"><div><span class="section-kicker">01 / THE INPUT</span><h2>Bring the fine print.</h2></div><button class="text-button" id="sampleButton" type="button"><span>↗</span> Load sample notice</button></div>
+      <form id="analyzeForm">
+        <label class="sr-only" for="noticeInput">Paste a notice, rules, or opportunity announcement</label>
+        <div class="input-frame"><div class="input-meta"><span><span class="input-dot"></span> YOUR SOURCE TEXT</span><span id="charCount">0 / 50,000</span></div><textarea id="noticeInput" name="notice" maxlength="50000" placeholder="Paste the rules, scholarship notice, internship requirements, or anything with fine print…" required></textarea><div class="input-footer"><span class="privacy-note"><span class="lock-icon">◇</span> Processed by this app; no external AI API call.</span><button class="analyze-button" id="analyzeButton" type="submit"><span>Analyze notice</span><span class="button-arrow">↗</span></button></div></div>
+      </form>
+      <div class="microcopy"><span>✳</span> ClarityKit searches for deadlines, eligibility, deliverables, restrictions and judging criteria. It is a guide, not a guarantee.</div>
+    </section>
+
+    <section id="resultsSection" class="results-section hidden" aria-live="polite">
+      <div class="results-header"><div><span class="section-kicker">02 / YOUR READOUT</span><h2>Here's what to watch.</h2></div><div class="results-actions"><button class="secondary-button" id="exportButton" type="button">↓ Export CSV</button><button class="secondary-button" id="copyButton" type="button">↗ Copy summary</button></div></div>
+      <div class="overview-grid">
+        <article class="overview-card overview-main"><div class="card-label">THE QUICK READ <span class="card-index">A1</span></div><p id="summaryText">—</p><div class="method-tag"><span class="method-dot"></span> Evidence-first · Keyword matching</div></article>
+        <article class="overview-card count-card"><div class="card-label">FINDINGS FOUND <span class="card-index">A2</span></div><div class="big-number" id="findingTotal">0</div><div class="count-caption">evidence snippets to review</div><div id="miniBars" class="mini-bars"></div></article>
+        <article class="overview-card date-card"><div class="card-label">DATES SPOTTED <span class="card-index">A3</span></div><div class="big-number" id="dateTotal">0</div><div class="count-caption">not all dates are deadlines</div><div id="nextDate" class="next-date">No date parsed yet</div></article>
+      </div>
+
+      <div class="results-layout">
+        <section class="panel findings-panel"><div class="panel-heading"><div><span class="section-kicker">EVIDENCE LOG</span><h3>What the notice says</h3></div><span id="filterCount" class="result-count">0 items</span></div><div id="categoryFilters" class="filter-row"></div><div id="findingsList" class="findings-list"></div><div id="emptyFindings" class="empty-state hidden">No strong matches yet. Paste more of the official notice or check a different section.</div></section>
+        <aside class="side-column">
+          <section class="panel dates-panel"><div class="panel-heading"><div><span class="section-kicker">TIME CHECK</span><h3>Dates in the text</h3></div><span class="panel-symbol">◷</span></div><div id="datesList" class="dates-list"></div><p class="panel-footnote">Always verify time zone and exact time on the official page.</p></section>
+          <section class="panel checklist-panel"><div class="panel-heading"><div><span class="section-kicker">YOUR NEXT MOVES</span><h3>Review checklist</h3></div><span id="checkProgress" class="progress-label">0 / 0</span></div><div id="checklist" class="checklist"></div><div class="check-progress-track"><div id="checkProgressFill" class="check-progress-fill"></div></div><p class="panel-footnote">Tick only after you verify it against the original source.</p></section>
+        </aside>
+      </div>
+      <section id="reviewPromptsPanel" class="review-prompts-panel hidden"><div class="review-icon">i</div><div><h3>Worth a second look</h3><p>These sections weren't matched clearly. That doesn't mean they're missing — verify the original notice.</p><div id="reviewPrompts" class="review-chips"></div></div></section>
+      <p id="methodNote" class="method-note"></p>
+    </section>
+
+    <section class="how-section"><div class="how-title"><span class="section-kicker">THE METHOD</span><h2>From wall of text<br>to next move.</h2></div><div class="how-steps"><article><span class="step-no">01</span><div class="step-icon">↳</div><h3>Paste the source</h3><p>Start with the official notice. ClarityKit doesn't invent context from a URL.</p></article><article><span class="step-no">02</span><div class="step-icon">⌕</div><h3>Spot the signals</h3><p>Keyword patterns flag likely requirements and quote the exact evidence.</p></article><article><span class="step-no">03</span><div class="step-icon">✓</div><h3>Verify &amp; act</h3><p>Check each finding, tick off your list and export a portable record.</p></article></div></section>
+
+    <footer class="footer"><a class="brand footer-brand" href="/"><span class="brand-mark"><span></span><span></span><span></span></span><span>clarity<span class="brand-light">kit</span></span></a><span>Make the fine print make sense.</span><span class="footer-right">BUILT FOR THE DETAILS THAT MATTER <span>✳</span></span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
